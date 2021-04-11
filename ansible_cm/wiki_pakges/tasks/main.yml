@@ -1,0 +1,37 @@
+---
+# tasks file for wiki
+
+  - name: Add EPEL, REMI Repo to host
+    yum:
+      name: "{{ external_repos }} "
+      state: present
+
+  - name: Disable SELinux
+    selinux:
+      state: disabled
+
+  - name: Install OS basic backges
+    yum:
+      name : "{{ os_basic_pkgs }}"
+      state: present
+
+  - name: Install Web package 
+    yum:
+      name: "{{ web_package }}"
+      enablerepo: "epel"
+
+  - name: Install PHP packages with repos 
+    yum:
+      name: "{{ php_pkg }}"
+      enablerepo: "epel,remi-safe,remi,remi-php70"
+
+  - name: Start httpd web service and enable it
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+#    regsiter: web_service_stat
+
+#  - name: Web Service status
+#    debug: var=web_service_stat.stdout_lines
+

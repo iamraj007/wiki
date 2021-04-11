@@ -1,0 +1,42 @@
+---
+# tasks file for dataabse---
+#  tasks:
+  - name: Install DB and dependency
+    yum:
+      name: "{{ item }}"
+    with_items:
+      - mariadb-server
+      - mariadb
+
+  - name: Start and enable mariadb service
+    service:
+      name: mariadb
+      state: started
+      enabled: yes
+
+  - name: Secure DB template 
+    template:
+      src: secure_db.j2
+      dest: /tmp/secure_db.sh
+      mode: 775
+
+  - name: Set Database passwd
+    command: "/usr/bin/sh /tmp/secure_db.sh" 
+#    script: /tmp/secure_db.sh
+#    remote_src: yes
+    ignore_errors: yes 
+
+ 
+  - name: Status of database service
+    shell: systemctl status  mariadb | grep Active
+    register: db_status
+
+  - name: DB Service status
+    debug: var=db_status.stdout
+
+#  - name: Clean up 
+#    file: 
+#      path: /tmp/secure_db.sh
+#      state: absent
+#    ignore_errors: yes
+

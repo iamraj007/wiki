@@ -1,0 +1,28 @@
+---
+# vars file for wiki
+external_repos:
+  - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  - http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+
+os_basic_pkgs:
+  - wget 
+  - curl 
+  - vim 
+  - tree
+
+web_package:
+ - httpd
+
+php_pkg:
+ - php73
+ - php73-php
+ - php73-php-mbstring
+ - php73-php-mysqlnd
+ - php73-php-gd
+ - php73-php-xml
+
+
+#db_mariadb_pkg: 
+# - mariadb-server
+# - mariadb
+

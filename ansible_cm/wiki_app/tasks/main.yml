@@ -1,0 +1,44 @@
+---
+# tasks file for wiki_app---
+
+  - name: Download Wiki binary 
+    get_url: 
+      url: "{{ wiki_source_binary }}"
+      dest: /tmp/mediawiki-1.35.2.tar.gz
+
+  - name: Unizp binary to web folder
+    unarchive:
+      src: /tmp/mediawiki-1.35.2.tar.gz
+      dest: /var/www
+      remote_src: yes
+
+  - name: Create symlink for www/mediawiki path
+    file: 
+      src: '/var/www/mediawiki-1.35.2/'
+      dest: '/var/www/mediawiki'
+      state: link
+
+
+  - name: Ensure apache permision
+    file:
+      path: /var/www/mediawiki/
+      owner: apache 
+      group: apache
+      recurse: yes
+
+  - name: Custome apache conf
+    template:
+      src: mediawiki.conf 
+      dest: /etc/httpd/conf.d/mediawiki.conf
+      owner: root
+      group: root
+      mode: '0644'
+    notify: Reload Webserive
+
+  - name: Clean up 
+    file:
+      path: /tmp/mediawiki-1.35.2.tar.gz 
+      state: absent
+
+  - debug: 
+      msg: " Wiki Installtion done on node, please open DNS or IP address to access site" 

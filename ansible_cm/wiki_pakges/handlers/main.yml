@@ -1,0 +1,7 @@
+---
+# handlers file for wiki
+  - name:  Reload Webserive
+    service:
+      name: httpd
+      state: reloaded
+
