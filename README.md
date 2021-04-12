@@ -23,6 +23,9 @@ $ ansible-playbook -i ./ec2.py --limit IPDetails/tag wiki_remote_setup.yaml --ex
 
 *This will take some time, after all roles are run you may access application.*
 
+To get all instance in a LB, use below aws cli comamnd: 
+aws elb describe-load-balancers --query LoadBalancerDescriptions[*].Instances --output text
+
 ## Pre requisite 
 The controller node should have Ansible and terraform (>0.12) installed 
 Boto and python library should be configured (for dynamic inv)
