@@ -1,9 +1,0 @@
----
-- hosts: "{{ target }}"
-  user: root
-  become: yes
-  roles:
-  - wiki_pakges
-  - wiki_app
-  - wiki_database
-
